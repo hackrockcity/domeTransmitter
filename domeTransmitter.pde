@@ -19,6 +19,7 @@ Routine[] enabledRoutines = new Routine[] {
   new OppositeLines(),
   new Waves(),
   new RadialStars(),
+  new NightSky(),
   new TargetScanner(),
   new Waterfalls(),
  // new FFT(),
