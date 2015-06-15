@@ -18,8 +18,8 @@ class FFTDemo extends Routine {
   void draw() {
     long frame = frameCount - modeFrameStart;
 
-    background(0);
-    stroke(255);
+    draw.background(0);
+    draw.stroke(255);
 
     fft.forward(audioin.mix);
 
@@ -27,16 +27,16 @@ class FFTDemo extends Routine {
     {
       // draw the line for frequency band i, scaling it by 4 so we can see it a bit better
       //    stroke(0,0,255);
-      //    line(i, displayHeight, i, displayHeight - fft.getBand(i)*4);
-      //    //line(i, displayHeight, i, displayHeight - fft.getBand(i));
+      //    line(i, Config.HEIGHT, i, Config.HEIGHT - fft.getBand(i)*4);
+      //    //line(i, Config.HEIGHT, i, Config.HEIGHT - fft.getBand(i));
       float barHeight = fft.getBand(i)*4;
       for (float c = 0; c < barHeight; c++) {
-        stroke(c/barHeight*255, 0, 255);
-        point(i, displayHeight - c);
+        draw.stroke(c/barHeight*255, 0, 255);
+        draw.point(i, Config.HEIGHT - c);
       }
     }
 
-    if (frame > FRAMERATE*TYPICAL_MODE_TIME) {
+    if (frame >Config.FRAMERATE*Config.MODE_TIMEOUT) {
       newMode();
     }
   }

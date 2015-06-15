@@ -19,15 +19,15 @@ class Pong extends Routine {
     ballSpeed = 0.125;
     lives = 3;
 
-    paddleX = displayWidth/2;
+    paddleX = Config.WIDTH/2;
     paddleY = 0;
-    paddleSize = displayHeight/8;
+    paddleSize = Config.HEIGHT/8;
     ballFlashUntilFrame = frameCount + (long)frameRate * 3;
   }
 
   void draw() {    
     if (frameCount < flashUntilFrame) {
-      background(millis() % 255, (millis() % 255)/2, 0);
+      draw.background(millis() % 255, (millis() % 255)/2, 0);
     }
     else if (lives > 0) {
       drawGameplay();
@@ -38,7 +38,7 @@ class Pong extends Routine {
   }
 
   void drawGameplay() {
-    background(0);
+    draw.background(0);
 
     if (frameCount > ballFlashUntilFrame) {
       moveBall();
@@ -51,19 +51,19 @@ class Pong extends Routine {
 
   void drawBall() {
     if (frameCount < ballFlashUntilFrame) {
-      stroke(millis() % 255, (millis() % 255)/2, 0);
+      draw.stroke(millis() % 255, (millis() % 255)/2, 0);
     }
     else {
-      stroke(255);
+      draw.stroke(255);
     }
-    point(ballX, ballY);
+    draw.point(ballX, ballY);
   }
 
   void drawPaddle() {
     for (int i=0; i<paddleSize; i++) {
 
-      stroke(255, 64, 64);
-      point(paddleX, paddleY+i);
+      draw.stroke(255, 64, 64);
+      draw.point(paddleX, paddleY+i);
     }
   }
 
@@ -75,8 +75,8 @@ class Pong extends Routine {
       paddleY++;
     }
 
-    if (paddleY > displayHeight-paddleSize) {
-      paddleY = displayHeight-paddleSize;
+    if (paddleY > Config.HEIGHT-paddleSize) {
+      paddleY = Config.HEIGHT-paddleSize;
     }
     else if (paddleY < 0) {
       paddleY = 0;
@@ -94,8 +94,8 @@ class Pong extends Routine {
     ballX += xVec;
     ballY += yVec; 
 
-    if (ballY >= displayHeight) {
-      ballY = displayHeight-1;
+    if (ballY >= Config.HEIGHT) {
+      ballY = Config.HEIGHT-1;
       bounceY();
     }
     else if (ballY < 0) {
@@ -103,8 +103,8 @@ class Pong extends Routine {
       bounceY();
     }
 
-    if (ballX >= displayWidth) {
-      ballX = ballX - displayWidth;
+    if (ballX >= Config.WIDTH) {
+      ballX = ballX - Config.WIDTH;
 
       if (!deathLeft) {
         playerDied();
@@ -114,7 +114,7 @@ class Pong extends Routine {
       }
     }
     else if (ballX < 0) {
-      ballX = displayWidth + ballX;
+      ballX = Config.WIDTH + ballX;
 
       if (deathLeft) {
         playerDied();

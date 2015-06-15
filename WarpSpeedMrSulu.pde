@@ -11,14 +11,14 @@ class WarpSpeedMrSulu extends Routine {
   }
   
   void draw() {
-    background(0);
-    stroke(255);
+    draw.background(0);
+    draw.stroke(255);
     
     for (int i=0; i<NUM_STARS; i++) {
       warpstars[i].draw();
     }
    
-    if (frameCount - modeFrameStart > FRAMERATE*TYPICAL_MODE_TIME) {
+    if (frameCount - modeFrameStart >Config.FRAMERATE*Config.MODE_TIMEOUT) {
       newMode();
     } 
   }
@@ -43,7 +43,7 @@ class WarpStar {
   }
 
   public void reset() {
-    x = int(random(0, displayWidth));
+    x = int(random(0, Config.WIDTH));
     y = int(random(0, -100));
 
 //    if (random(0,1) > .5) {
@@ -62,35 +62,40 @@ class WarpStar {
     x = x + vx;
     y = y + vy;
     //RGB 252/23/218 
-    //r = int(map(y, 0, displayHeight, 0, 255));
+    //r = int(map(y, 0, Config.HEIGHT, 0, 255));
     //g = 0;
     //b = 0;
     //r = 252;
     //g = 23;
     //b = 218;
-    r = random(232,255);
-    g = random(230,255);
-    b = random(230,255);
+//    r = random(232,255);
+//    g = random(230,255);
+//    b = random(230,255);
+
+    r = red(primaryColor);
+    g = green(primaryColor);
+    b = blue(primaryColor);
+
     // scale brightness.
     float bright = random(.5,2);
     r = r*bright;
     g = g*bright;
     b = b*bright;
 
-    stroke(r, g, b);
-    point(x, y);
+    draw.stroke(r, g, b);
+    draw.point(x, y);
 
     for (int i=0; i<len; i++) {
       float intensity = 255 >> i / 2;
       
-      fill(color(r*random(.8,1.3),g*random(.8,1.3),b*random(.8,1.3)));
-      stroke(color(r,g,b));
+      draw.fill(color(r*random(.8,1.3),g*random(.8,1.3),b*random(.8,1.3)));
+      draw.stroke(color(r,g,b));
       //stroke(intensity);
-      point(x, y - i);
+      draw.point(x, y - i);
     }
 
-    if (y > displayHeight) this.reset();
-    if (x > displayWidth) this.reset();
+    if (y > Config.HEIGHT) this.reset();
+    if (x > Config.WIDTH) this.reset();
   }
 }
 

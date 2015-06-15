@@ -2,16 +2,16 @@ class RGBRoutine extends Routine {
   int color_angle = 0;
   
   void draw() {
-    background(0);
+    draw.background(0);
   
-    for (int row = 0; row < displayHeight; row++) {
-      for (int col = 0; col < displayWidth; col++) {
-        float r = (((row)*2          + 100.0*col/displayWidth   + color_angle  +   0)%100)*(255.0/100);
-        float g = (((row)*2          + 100.0*col/displayWidth   + color_angle  +  33)%100)*(255.0/100);
-        float b = (((row)*2          + 100.0*col/displayWidth   + color_angle  +  66)%100)*(255.0/100);
+    for (int row = 0; row < Config.HEIGHT; row++) {
+      for (int col = 0; col < Config.WIDTH; col++) {
+        float r = (((row)*2          + 100.0*col/Config.WIDTH   + color_angle  +   0)%100)*(255.0/100);
+        float g = (((row)*2          + 100.0*col/Config.WIDTH   + color_angle  +  33)%100)*(255.0/100);
+        float b = (((row)*2          + 100.0*col/Config.WIDTH   + color_angle  +  66)%100)*(255.0/100);
         
-        stroke(r,g,b);
-        point(col,row);
+        draw.stroke(r,g,b);
+        draw.point(col,row);
       }
     }
     
@@ -19,7 +19,7 @@ class RGBRoutine extends Routine {
 
 
     long frame = frameCount - modeFrameStart;
-    if (frame > FRAMERATE*TYPICAL_MODE_TIME) {
+    if (frame >Config.FRAMERATE*Config.MODE_TIMEOUT) {
       newMode();
     }
   }

@@ -1,4 +1,4 @@
-/**
+ /**
  * Display an animation based on a set of PNG images
  */
 class Animator extends Routine {
@@ -30,22 +30,22 @@ class Animator extends Routine {
   }
   
   void draw() {
-    background(0);
+    draw.background(0);
   
     float frame_mult = 3;  // speed adjustment
   
     long frame = frameCount;
     
     // Draw four images, in case we are wrapping
-    float xNominal = (frame*m_xVelocity + m_xOffset)%width;
-    float yNominal = (frame*m_yVelocity + m_yOffset)%height;
+    float xNominal = (frame*m_xVelocity + m_xOffset)%Config.WIDTH;
+    float yNominal = (frame*m_yVelocity + m_yOffset)%Config.HEIGHT;
 
-    image(anim.update(),xNominal,         yNominal);
-    image(anim.update(),xNominal - width, yNominal);    
-    image(anim.update(),xNominal - width, yNominal - height);
-    image(anim.update(),xNominal,         yNominal - height);
+    draw.image(anim.update(),xNominal, yNominal);
+    draw.image(anim.update(),xNominal - Config.WIDTH, yNominal);    
+    draw.image(anim.update(),xNominal - Config.WIDTH, yNominal - Config.HEIGHT);
+    draw.image(anim.update(),xNominal, yNominal - Config.HEIGHT);
 
-    if (frame > FRAMERATE*TYPICAL_MODE_TIME) {
+    if (frame > Config.FRAMERATE*Config.MODE_TIMEOUT) {
       newMode();
     }
   }
@@ -59,7 +59,7 @@ class Animation {
   PGraphics canvas;
   
   Animation(String _name, int _frameDivider) {
-    canvas = createGraphics(width,height,P2D);
+    canvas = createGraphics(Config.WIDTH,Config.HEIGHT,P2D);
     frameNumber = 0;
     frameDivider = _frameDivider;
     load(_name);
@@ -106,16 +106,16 @@ class Animation {
       }
     }
       canvas.beginDraw();
-      if(frames[frameNumber].width==width&&frames[frameNumber].height==height){
+      if(frames[frameNumber].width==Config.WIDTH&&frames[frameNumber].height==Config.HEIGHT){
         canvas.image(frames[frameNumber],0,0);
-      }else if(frames[frameNumber].width<width&&frames[frameNumber].height<height){
-        canvas.image(frames[frameNumber],0,0,width,height);
+      }else if(frames[frameNumber].width<Config.WIDTH&&frames[frameNumber].height<Config.HEIGHT){
+        canvas.image(frames[frameNumber],0,0,Config.WIDTH,Config.HEIGHT);
       }else{
       canvas.loadPixels();
-      for(int x = 0; x < width; x++) {
-        for (int y = 0; y < height; y++) {
-            int loc1 = x + (y * width);
-            int loc2 = (x*(round(float(frames[frameNumber].width)/float(width)))) + ((y*(round(float(frames[frameNumber].height)/float(height)))) * frames[frameNumber].width);
+      for(int x = 0; x < Config.WIDTH; x++) {
+        for (int y = 0; y < Config.HEIGHT; y++) {
+            int loc1 = x + (y * Config.WIDTH);
+            int loc2 = (x*(round(float(frames[frameNumber].width)/float(Config.WIDTH)))) + ((y*(round(float(frames[frameNumber].height)/float(Config.HEIGHT)))) * frames[frameNumber].width);
             try{
               canvas.pixels[loc1] = frames[frameNumber].pixels[loc2];
             }catch(Exception e){ }

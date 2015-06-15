@@ -12,11 +12,12 @@ class VerticalGreetz extends Routine {
   int bufferWidth;
   int bufferHeight;
   int w;
+  int x;
 
   void setup(PApplet parent) {
     super.setup(parent);
-    w = bufferWidth = displayHeight;
-    bufferHeight = displayWidth;
+    w = bufferWidth = Config.HEIGHT;
+    bufferHeight = Config.WIDTH;
     
     buffer = createGraphics(bufferWidth,bufferHeight,JAVA2D);
     font = loadFont("Disorient-" + FONT_SIZE + ".vlw");
@@ -29,7 +30,7 @@ class VerticalGreetz extends Routine {
     buffer.background(0);
   
     if (w == 0) {
-      w = -int((message.length()-1) * (FONT_SIZE*1.35) + displayWidth);
+      w = -int((message.length()-1) * (FONT_SIZE*1.35) + Config.WIDTH);
     }
     
     buffer.fill(255,128,64);
@@ -37,10 +38,9 @@ class VerticalGreetz extends Routine {
     buffer.endDraw();
     
     pushMatrix();
-    
-    rotate(-HALF_PI);
-    translate(0,-displayWidth);
-    image(buffer,0,0);
+    draw.rotate(-HALF_PI);
+    draw.translate(0,-Config.WIDTH);
+    draw.image(buffer,0,0);
     popMatrix();
   
     if (frameCount % 2 == 0) {

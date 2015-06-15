@@ -11,20 +11,18 @@ class Fire extends Routine {
 
   void setup(PApplet parent) {
     super.setup(parent);
-    //  size(640, 360, P2D);
-
     // Create buffered image for 3d cube
-    pg = createGraphics(displayWidth, displayHeight, P3D);
+    pg = createGraphics(Config.WIDTH, Config.HEIGHT, P3D);
 
-    calc1 = new int[displayWidth];
-    calc3 = new int[displayWidth];
-    calc4 = new int[displayWidth];
-    calc2 = new int[displayHeight];
-    calc5 = new int[displayHeight];
+    calc1 = new int[Config.WIDTH];
+    calc3 = new int[Config.WIDTH];
+    calc4 = new int[Config.WIDTH];
+    calc2 = new int[Config.HEIGHT];
+    calc5 = new int[Config.HEIGHT];
 
-    colorMode(HSB);
+    draw.colorMode(HSB);
 
-    fire = new int[displayWidth][displayHeight];
+    fire = new int[Config.WIDTH][Config.HEIGHT];
     palette = new color[255];
 
     // Generate the palette
@@ -37,18 +35,18 @@ class Fire extends Routine {
 
     // Precalculate which pixel values to add during animation loop
     // this speeds up the effect by 10fps
-    for (int x = 0; x < displayWidth; x++) {
-      calc1[x] = x % displayWidth;
-      calc3[x] = (x - 1 + displayWidth) % displayWidth;
-      calc4[x] = (x + 1) % displayWidth;
+    for (int x = 0; x < Config.WIDTH; x++) {
+      calc1[x] = x % Config.WIDTH;
+      calc3[x] = (x - 1 + Config.WIDTH) % Config.WIDTH;
+      calc4[x] = (x + 1) % Config.WIDTH;
     }
 
-    for (int y = 0; y < displayHeight; y++) {
-      calc2[y] = (y + 1) % displayHeight;
-      calc5[y] = (y + 2) % displayHeight;
+    for (int y = 0; y < Config.HEIGHT; y++) {
+      calc2[y] = (y + 1) % Config.HEIGHT;
+      calc5[y] = (y + 2) % Config.HEIGHT;
     }
     
-    colorMode(RGB);
+    draw.colorMode(RGB);
   }
 
   void draw() {
@@ -56,7 +54,7 @@ class Fire extends Routine {
 
 //    // Rotating wireframe cube
 //    pg.beginDraw();
-//    pg.translate(displayWidth >> 1, displayHeight >> 1);
+//    pg.translate(Config.WIDTH >> 1, Config.HEIGHT >> 1);
 //    pg.rotateX(sin(angle/2));
 //    pg.rotateY(cos(angle/2));
 //    pg.background(0);
@@ -67,17 +65,17 @@ class Fire extends Routine {
 //    pg.endDraw();
 
     // Randomize the bottom row of the fire buffer
-    for (int x = 0; x < displayWidth; x++)
+    for (int x = 0; x < Config.WIDTH; x++)
     {
-      fire[x][displayHeight-1] = int(random(0, 190)) ;
+      fire[x][Config.HEIGHT-1] = int(random(0, 190)) ;
     }
 
-    loadPixels();
+    draw.loadPixels();
 
     int counter = 0;
     // Do the fire calculations for every pixel, from top to bottom
-    for (int y = 0; y < displayHeight; y++) {
-      for (int x = 0; x < displayWidth; x++) {
+    for (int y = 0; y < Config.HEIGHT; y++) {
+      for (int x = 0; x < Config.WIDTH; x++) {
         // Add pixel values around current pixel
 
         fire[x][y] =
@@ -87,7 +85,7 @@ class Fire extends Routine {
           + fire[calc1[x]][calc5[y]]) << 5) / 129;
 
         // Output everything to screen using our palette colors
-        pixels[counter] = palette[fire[x][y]];
+        draw.pixels[counter] = palette[fire[x][y]];
 
         // Extract the red value using right shift and bit mask 
         // equivalent of red(pg.pixels[x+y*w])
@@ -97,7 +95,7 @@ class Fire extends Routine {
         }
       }
     }
-    updatePixels();
+    draw.updatePixels();
   }
 }
 

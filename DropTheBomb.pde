@@ -9,20 +9,20 @@ class DropTheBomb extends Routine {
   
   void setup(PApplet parent) {
     super.setup(parent);
-    bombSpeed = displayHeight / (frameRate*3);
+    bombSpeed = Config.HEIGHT / (frameRate*3);
     flashSpeed = 255 / (frameRate*1);   
-    blastSpeed = max(displayWidth,displayHeight) / (frameRate*5);
+    blastSpeed = max(Config.WIDTH,Config.HEIGHT) / (frameRate*5);
   }    
     
   void reset() {
-    bombX = random(displayWidth);
+    bombX = random(Config.WIDTH);
     bombY = 0;
     flashBrightness = 255;    
     blastRadius = 0;
   }
   
   void draw() {
-    if (bombY < displayHeight) {
+    if (bombY < Config.HEIGHT) {
       drawBomb();
       bombY += bombSpeed;
     }
@@ -30,7 +30,7 @@ class DropTheBomb extends Routine {
       drawFlash();
       flashBrightness -= flashSpeed;
     }
-    else if (blastRadius/2 < displayWidth || blastRadius/2 < displayHeight) {
+    else if (blastRadius/2 < Config.WIDTH || blastRadius/2 < Config.HEIGHT) {
       drawBlast();
       blastRadius += blastSpeed;
     }
@@ -41,29 +41,29 @@ class DropTheBomb extends Routine {
   
   void drawBomb() {
     int c = 255;
-    background(0);
+    draw.background(0);
     
     for (int i=0; i<5; i++) {
-      stroke(c);
-      point(bombX,bombY-i);
+      draw.stroke(c);
+      draw.point(bombX,bombY-i);
       c = c - 32;
     }
   }
   
   void drawFlash() {
-    colorMode(HSB);
-    background(0, 255 - flashBrightness, flashBrightness);
-    colorMode(RGB);
+    draw.colorMode(HSB);
+    draw.background(0, 255 - flashBrightness, flashBrightness);
+    draw.colorMode(RGB);
   }
   
   void drawBlast() {
-    noStroke();
-    rectMode(CENTER);
-    background(0);
+    draw.noStroke();
+    draw.rectMode(CENTER);
+    draw.background(0);
     for (int i=0; i<5; i++) {    
-      fill(255-(i*16),64-(i*4),32-(i*2));
-      ellipseMode(CENTER);
-      rect(0,displayHeight,displayWidth*2,blastRadius/(i+1));
+      draw.fill(255-(i*16),64-(i*4),32-(i*2));
+      draw.ellipseMode(CENTER);
+      draw.rect(0,Config.HEIGHT,Config.WIDTH*2,blastRadius/(i+1));
     }
   }
 }

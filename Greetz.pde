@@ -1,4 +1,6 @@
 class Greetz extends Routine {
+  int w;
+  int x;
   int FONT_SIZE = 16;
   PFont font;
   PImage imgCopy;
@@ -13,29 +15,31 @@ class Greetz extends Routine {
   void setup(PApplet parent) {
     super.setup(parent);
     font = loadFont("Disorient-" + FONT_SIZE + ".vlw");
-    textFont(font, FONT_SIZE);
-    textMode(MODEL);
+    draw.textFont(font, FONT_SIZE);
+    draw.textMode(MODEL);
+    w=0;
+    x=0;
   }
  
   void draw() {
-    background(0);
-    fill(255);
+    draw.background(0);
+    draw.fill(255);
   
     if (w == 0) {
-      w = -int((message.length()-1) * (FONT_SIZE*1.35) + displayWidth);
+      w = -int((message.length()-1) * (FONT_SIZE*1.35) + Config.WIDTH);
     }
     
-    fill(255,128,64);
-    text(message, x, FONT_SIZE);
+    draw.fill(255,128,64);
+    draw.text(message, x, FONT_SIZE);
   
-    if (displayHeight/2 > FONT_SIZE) {
+    if (Config.HEIGHT/2 > FONT_SIZE) {
       
-      image(get(0,0,displayWidth,FONT_SIZE),0,20,displayWidth,displayHeight/2);
-      fill(0);
-      rect(0,0,displayWidth,FONT_SIZE);
-      //copy(0,0,displayWidth,FONT_SIZE,0,FONT_SIZE,displayWidth,FONT_SIZE/2);
-      //imgCopy = copy(0,0,displayWidth,FONT_SIZE);
-      //image(imgCopy,0,0,displayWidth,displayHeight);
+      draw.image(draw.get(0,0,Config.WIDTH,FONT_SIZE),0,20,Config.WIDTH,Config.HEIGHT/2);
+      draw.fill(0);
+      draw.rect(0,0,Config.WIDTH,FONT_SIZE);
+      //copy(0,0,Config.WIDTH,FONT_SIZE,0,FONT_SIZE,Config.WIDTH,FONT_SIZE/2);
+      //imgCopy = copy(0,0,Config.WIDTH,FONT_SIZE);
+      //image(imgCopy,0,0,Config.WIDTH,Config.HEIGHT);
     }
     
     if (frameCount % 2 == 0) {
@@ -43,7 +47,7 @@ class Greetz extends Routine {
     }
   
     if (x<w) {
-      x = displayHeight;  
+      x = Config.HEIGHT;  
       message = messages[int(random(messages.length))];
       w = 0;
       newMode();

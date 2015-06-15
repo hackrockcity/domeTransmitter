@@ -1,13 +1,21 @@
 class Chase extends Routine {
   void draw() {
-    background(0);
-    stroke(color(255,255,255));
+    draw.background(0);
 
     long frame = frameCount - modeFrameStart;
-    line(frame/3.0%displayWidth, 0, frame/3.0%displayWidth, displayHeight);
-    line((frame/3.0+1)%displayWidth, 0, ((frame/3.0+1))%displayWidth, displayHeight);
+    
+    draw.stroke(red(primaryColor)*0.5,green(primaryColor)*0.5,blue(primaryColor)*0.5);
+    draw.line(frame/3.0%Config.WIDTH, 0, frame/3.0%Config.WIDTH, Config.HEIGHT);
+    draw.stroke(red(primaryColor)*0.6,green(primaryColor)*0.6,blue(primaryColor)*0.6);
+    draw.line((frame/3.0+1)%Config.WIDTH, 0, ((frame/3.0+1))%Config.WIDTH, Config.HEIGHT);
+    draw.stroke(red(primaryColor)*0.7,green(primaryColor)*0.7,blue(primaryColor)*0.7);
+    draw.line((frame/3.0+2)%Config.WIDTH, 0, ((frame/3.0+2))%Config.WIDTH, Config.HEIGHT);
+    draw.stroke(red(primaryColor)*0.8,green(primaryColor)*0.8,blue(primaryColor)*0.8);
+    draw.line((frame/3.0+3)%Config.WIDTH, 0, ((frame/3.0+3))%Config.WIDTH, Config.HEIGHT);
+    draw.stroke(primaryColor);
+    draw.line((frame/3.0+4)%Config.WIDTH, 0, ((frame/3.0+4))%Config.WIDTH, Config.HEIGHT);
 
-    if (frame > FRAMERATE*TYPICAL_MODE_TIME) {
+    if (frame >Config.FRAMERATE*Config.MODE_TIMEOUT) {
       newMode();
     }
   }

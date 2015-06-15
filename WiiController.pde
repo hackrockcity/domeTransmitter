@@ -137,7 +137,7 @@ class WiiController {
     if(theOscMessage.checkAddrPattern("/brightness")==true) {
       if(theOscMessage.checkTypetag("f")) {
 //        println("Update brigthness to " + theOscMessage.get(0).floatValue());
-        bright = theOscMessage.get(0).floatValue();
+        Config.BRIGHTNESS = theOscMessage.get(0).floatValue();
       }
     }
   }
@@ -252,7 +252,7 @@ class WiiController {
     buttonUp = (theValue==1)  ? true:false;
     
     if(buttonUp) {
-      bright = min(1,bright + .1);
+      Config.BRIGHTNESS = min(1,Config.BRIGHTNESS + .1);
     }
   }
 
@@ -260,7 +260,7 @@ class WiiController {
     buttonDown = (theValue==1) ? true:false;
 
     if(buttonDown) {
-      bright = max(.1,bright - .1);
+      Config.BRIGHTNESS = max(.1,Config.BRIGHTNESS - .1);
     }
   }
   
